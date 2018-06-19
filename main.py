@@ -1,5 +1,4 @@
 from system import SystemQueue
-from queue import PriorityQueue
 from time import sleep
 
 
