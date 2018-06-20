@@ -32,6 +32,7 @@ class SystemQueue(object):
 
     def display(self):
         print "Sistema de colas \n"
+        print "Cant. cliente en el sist.: " + str(self.n)
         self.chronometer.display()
         self.queue.display()
         self.servers.display()
