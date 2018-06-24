@@ -1,6 +1,8 @@
 import math
 
+
 class Statistics(object):
+
     def __init__(self, lbmda, mu, s, n, nq):
         self.lbmda = lbmda
         self.mu = mu
@@ -83,8 +85,16 @@ class Statistics(object):
     # Cn
     def cn(self, n):
         cn_summation = 0
-        for x in range(0, n):
-            cn_summation += self.get_intensity_traffic()**x
+        if self.s > 1:
+            # MMS
+            for x in range(1, self.s):
+                if x <= self.s:
+                    cn_summation += (1/math.factorial(x)) * ((self.lbmda / self.mu) ** x)
+                elif x >= self.s + 1:
+                    cn_summation += (1/(math.factorial(self.s)*(self.s**(x-self.s)))) * ((self.lbmda / self.mu) ** x)
+        else:
+            for x in range(0, n):
+                cn_summation += self.get_intensity_traffic()**x
         return cn_summation
 
     # W
@@ -126,5 +136,3 @@ class Statistics(object):
 
     def display_statistics(self):
         print "L: " + str(self.len) + "Lq: " + str(self.lq) + "W: " + str(self.w) + "Wq: " + str(self.wq) + "\n"
-
-
