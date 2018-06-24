@@ -123,3 +123,8 @@ class Statistics(object):
 
     def get_time_average_service_system(self):
         return self.ws
+
+    def display_statistics(self):
+        print "L: " + str(self.len) + "Lq: " + str(self.lq) + "W: " + str(self.w) + "Wq: " + str(self.wq) + "\n"
+
+
