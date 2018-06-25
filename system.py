@@ -1,6 +1,7 @@
 from queuetp import QueueTP
 from server import Server
 from chronometer import Chronometer
+from prettytable import PrettyTable
 
 
 class SystemQueue(object):
@@ -37,8 +38,12 @@ class SystemQueue(object):
             self.n = self.queue.quantity_client() + self.ei
 
     def display(self):
+        table = PrettyTable()
+        table.field_names = ["Cant. cliente en el sist."]
+        table.add_row([self.n])
         print "Sistema de colas \n"
-        print "Cant. cliente en el sist.: " + str(self.n)
+        print table
+        # print "Cant. cliente en el sist.: " + str(self.n)
         self.chronometer.display()
         self.queue.display()
 

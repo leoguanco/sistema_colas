@@ -1,3 +1,5 @@
+from prettytable import PrettyTable
+
 class Chronometer(object):
     def __init__(self):
         self.time = 0
@@ -9,4 +11,8 @@ class Chronometer(object):
         self.time += time
 
     def display(self):
-        print "Tiempo transcurrido: " + str(self.time) + "\n"
+        table = PrettyTable()
+        table.field_names = ["Tiempo transcurrido"]
+        table.add_row([self.time])
+        print table
+        # print "Tiempo transcurrido: " + str(self.time) + "\n"

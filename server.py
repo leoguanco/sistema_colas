@@ -1,3 +1,4 @@
+from prettytable import PrettyTable
 import math
 
 
@@ -52,7 +53,11 @@ class Server(object):
                 self.dispatch(n)
 
     def display(self):
-        print "mu: " + str(self.mu) + " Estado del servidor: " + str(self.request_status()) + \
-              " Tiempo llegada ultimo cliente: " + str(self.get_time_arrival_client()) + \
-              " Tiempo proximo cliente: " + str(self.get_time_next_client()) + \
-              " Clientes pasados por el servidor: " + str(self.ns) + "\n"
+        table = PrettyTable()
+        table.field_names = ["mu", "Estado del servidor", "Tiempo llegada ultimo cliente", "Tiempo proximo cliente", "Clientes pasados por el servidor"]
+        table.add_row([self.mu, self.request_status(), self.get_time_arrival_client(), self.get_time_next_client(), self.ns])
+        print table
+        # print "mu: " + str(self.mu) + " Estado del servidor: " + str(self.request_status()) + \
+        #       " Tiempo llegada ultimo cliente: " + str(self.get_time_arrival_client()) + \
+        #       " Tiempo proximo cliente: " + str(self.get_time_next_client()) + \
+        #       " Clientes pasados por el servidor: " + str(self.ns) + "\n"
