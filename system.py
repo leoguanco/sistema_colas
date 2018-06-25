@@ -18,6 +18,8 @@ class SystemQueue(object):
 
     def iterator(self):
         time_next_event = []
+        self.n = 0
+        self.ei = 0
 
         for s in self.servers:
             time_next_event.append(s.get_time_next_client())
@@ -43,14 +45,11 @@ class SystemQueue(object):
         table.add_row([self.n])
         print "Sistema de colas \n"
         print table
-        # print "Cant. cliente en el sist.: " + str(self.n)
         self.chronometer.display()
         self.queue.display()
 
         for s in self.servers:
             s.display()
-
-        print "---------------------------------\n"
 
     def get_status(self):
         pass

@@ -4,7 +4,14 @@ import os
 
 
 def main():
-    clear = lambda: os.system('clear')
+    sist = os.name
+    if "nt" in sist:
+        clear = lambda: os.system('cls')
+    elif "posix" in sist:
+        clear = lambda: os.system('clear')
+    else:
+        clear = lambda: os.system('clear')
+
     s = input("Ingrese la cant. de servidores: ")
     lmbda = input("Ingrese lambda: ")
     mu = input("Ingrese mu: ")
@@ -15,10 +22,10 @@ def main():
     system = SystemQueue(s, lmbda, mu, nq)
 
     while True:
+        clear()
         system.iterator()
         system.display()
         sleep(1)
-        clear()
 
 
 if __name__ == '__main__':

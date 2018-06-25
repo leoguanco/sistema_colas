@@ -15,4 +15,3 @@ class Chronometer(object):
         table.field_names = ["Tiempo transcurrido"]
         table.add_row([self.time])
         print table
-        # print "Tiempo transcurrido: " + str(self.time) + "\n"

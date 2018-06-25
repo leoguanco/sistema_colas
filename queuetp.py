@@ -52,6 +52,3 @@ class QueueTP(object):
         table.field_names = ["lambda", "Cant. clientes en la cola", "Tiempo llegada ultimo cliente", "Tiempo proximo cliente"]
         table.add_row([self.lmbda, self.quantity_client(), self.get_time_arrival_client(), self.get_time_next_client()])
         print table
-        # print "lambda: " + str(self.lmbda) + " Cant. clientes en la cola: " + str(self.quantity_client()) + \
-        #       " Tiempo llegada ultimo cliente: " + str(self.get_time_arrival_client()) + \
-        #       " Tiempo proximo cliente: " + str(self.get_time_next_client()) + "\n"
