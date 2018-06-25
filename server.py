@@ -30,12 +30,12 @@ class Server(object):
 
     def request_client(self, n):
         request = self.queue.dispatch()
-        self.ns += 1
         if request is not None:
             self.client = request
             self.status = 1
             self.time_arrival_client = self.chronometer.time_simulation()
             self.set_time_next_client(n)
+            self.ns += 1
         else:
             self.status = 0
 
