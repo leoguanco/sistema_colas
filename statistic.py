@@ -1,3 +1,4 @@
+from prettytable import PrettyTable
 import math
 
 
@@ -135,4 +136,8 @@ class Statistics(object):
         return self.ws
 
     def display_statistics(self):
-        print "L: " + str(self.len) + "Lq: " + str(self.lq) + "W: " + str(self.w) + "Wq: " + str(self.wq) + "\n"
+        table = PrettyTable()
+        table.field_names = ["L", "Lq", "W", "Wq"]
+        table.add_row([self.len, self.lq, self.w, self.wq])
+        print table
+        # print "L: " + str(self.len) + "Lq: " + str(self.lq) + "W: " + str(self.w) + "Wq: " + str(self.wq) + "\n"
