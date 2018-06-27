@@ -3,7 +3,7 @@ import math
 
 
 class Server(object):
-    def __init__(self, mu, queue, chronometer, n):
+    def __init__(self, mu, queue, chronometer):
         self.mu = mu
         self.chronometer = chronometer
         self.status = 0
@@ -15,6 +15,9 @@ class Server(object):
 
     def get_mu(self):
         return self.mu
+
+    def set_mu(self, mu):
+        self.mu = mu
 
     def request_status(self):
         return self.status

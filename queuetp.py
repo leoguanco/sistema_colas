@@ -19,6 +19,14 @@ class QueueTP(object):
     def get_lambda(self):
         return self.lmbda
 
+    def set_lambda(self, lmbda):
+        self.lmbda = lmbda
+
+    def set_nq(self, nq):
+        if self.nq > 0:
+            for i in range(0, nq):
+                self.receive()
+
     def quantity_client(self):
         return len(self.clients)
 
