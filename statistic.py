@@ -135,9 +135,24 @@ class Statistics(object):
     def get_time_average_service_system(self):
         return self.ws
 
-    def display_statistics(self):
+    def display(self):
         table = PrettyTable()
         table.field_names = ["L", "Lq", "W", "Wq"]
         table.add_row([self.len, self.lq, self.w, self.wq])
         print table
         # print "L: " + str(self.len) + "Lq: " + str(self.lq) + "W: " + str(self.w) + "Wq: " + str(self.wq) + "\n"
+
+    def update(self):
+        # Lq
+        self.set_client_quantity_queue()
+        # L
+        self.set_client_quantity_system()
+        # p
+        self.set_intensity_traffic()
+        # Wq
+        self.set_time_average_client_queue()
+        # W
+        self.set_time_average_client_system()
+        # ws
+        self.set_time_average_service_system()
+

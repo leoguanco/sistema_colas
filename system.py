@@ -2,6 +2,7 @@ from queuetp import QueueTP
 from server import Server
 from chronometer import Chronometer
 from prettytable import PrettyTable
+from statistic import Statistics
 
 
 class SystemQueue(object):
@@ -15,6 +16,7 @@ class SystemQueue(object):
         self.chronometer = Chronometer()
         self.queue = QueueTP(self.lmbda, self.nq, self.chronometer)
         self.servers = []
+        self.statistic = Statistics(lmbda, mu, s, nq, nq)
         for i in range(0, s):
             self.servers.append(Server(self.mu, self.queue, self.chronometer))
 
@@ -65,6 +67,10 @@ class SystemQueue(object):
                 self.ei += s.request_status()
             self.n = self.queue.quantity_client() + self.ei
 
+        # Set statistics attributes and update Statistics
+        self.statistic = Statistics(self.lmbda, self.mu, self.s, self.n, self.nq)
+        self.statistic.update()
+
     def display(self):
         table = PrettyTable()
         table.field_names = ["Cant. cliente en el sist."]
@@ -72,6 +78,7 @@ class SystemQueue(object):
         print "Sistema de colas \n"
         print table
         self.chronometer.display()
+        self.statistic.display()
         self.queue.display()
 
         for s in self.servers:

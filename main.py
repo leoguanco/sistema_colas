@@ -4,6 +4,7 @@ import os
 import sys
 import select
 
+
 def main():
     sist = os.name
     pause = False
@@ -16,6 +17,7 @@ def main():
         clear = lambda: os.system('clear')
 
     s, lmbda, mu, nq = initial_value()
+
     system = SystemQueue(s, lmbda, mu, nq)
 
     while True:
