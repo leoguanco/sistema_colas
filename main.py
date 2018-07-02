@@ -38,19 +38,19 @@ def main():
                 edit = sys.stdin.readline().rstrip()
                 if edit == 'L':
                     lmbda = input("Ingrese lambda: ")
-                    system.set_status(s, lmbda, mu, nq)
+                    system.set_status(0, lmbda, mu, 0)
                     pause = False
                 elif edit == 'M':
                     mu = input("Ingrese mu: ")
-                    system.set_status(s, lmbda, mu, nq)
+                    system.set_status(0, lmbda, mu, 0)
                     pause = False
                 elif edit == 'S':
                     s = input("Ingrese la cant. de servidores: ")
-                    system.set_status(s, lmbda, mu, nq)
+                    system.set_status(s, lmbda, mu, 0)
                     pause = False
                 elif edit == 'N':
                     n = input("Ingrese cantidad de clientes nuevos: ")
-                    system.set_status(s, lmbda, mu, n)
+                    system.set_status(0, lmbda, mu, n)
                     pause = False
 
         if not pause:

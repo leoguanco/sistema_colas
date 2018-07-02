@@ -79,7 +79,7 @@ class Statistics(object):
     # Pn
     def probability_n(self, n):
         p0 = self.get_p0(n)
-        cn = self.get_intensity_traffic ** n
+        cn = self.get_intensity_traffic() ** n
         pn = cn * p0
         return pn
 
