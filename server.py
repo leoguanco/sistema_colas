@@ -1,4 +1,5 @@
 from prettytable import PrettyTable
+import numpy as np
 import math
 
 
@@ -9,7 +10,8 @@ class Server(object):
         self.status = 0
         self.client = None
         self.time_arrival_client = 0
-        self.time_next_client = self.mu * (math.e ** (-1 * self.mu * self.chronometer.time_simulation()))
+        self.time_next_client =  -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.mu)
+        # self.time_next_client = self.mu * (math.e ** (-1 * self.mu * self.chronometer.time_simulation()))
         self.queue = queue
         self.ns = 0
 
@@ -26,7 +28,7 @@ class Server(object):
         return self.time_arrival_client
 
     def set_time_next_client(self, n):
-        self.time_next_client = self.mu * (math.e ** (-1 * self.mu * self.chronometer.time_simulation())) + \
+        self.time_next_client = -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.mu) + \
                                 self.time_arrival_client
 
     def get_time_next_client(self):

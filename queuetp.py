@@ -1,5 +1,6 @@
 from client import Client
 from prettytable import PrettyTable
+import numpy as np
 import math
 
 
@@ -10,7 +11,7 @@ class QueueTP(object):
         self.nq = nq
         self.clients = []
         self.time_arrival_client = 0
-        self.time_next_client = self.lmbda * (math.e ** (-1*self.lmbda*self.chronometer.time_simulation()))
+        self.time_next_client = -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.lmbda)
 
         if self.nq > 0:
             for i in range(0, nq):
@@ -34,7 +35,7 @@ class QueueTP(object):
         return self.time_arrival_client
 
     def set_time_next_client(self):
-        self.time_next_client = self.lmbda * (math.e ** (-1*self.lmbda*(self.chronometer.time_simulation())))
+        self.time_next_client = -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.lmbda)
 
     def get_time_next_client(self):
         return self.time_next_client
