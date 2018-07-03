@@ -16,7 +16,7 @@ class SystemQueue(object):
         self.chronometer = Chronometer()
         self.queue = QueueTP(self.lmbda, self.nq, self.chronometer)
         self.servers = []
-        self.statistic = Statistics(lmbda, mu, s, nq, nq)
+        # self.statistic = Statistics(lmbda, mu, s, nq, nq)
         for i in range(0, s):
             self.servers.append(Server(self.mu, self.queue, self.chronometer))
 
