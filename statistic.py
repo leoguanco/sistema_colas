@@ -6,11 +6,21 @@ class Statistics(object):
 
     def __init__(self, lbmda, mu, s, n, nq):
         self.lbmda = lbmda
-        self.mu = mu
+        if s > 1:
+            if 1 <= n <= s:
+                self.mu = n * mu
+                print "if"
+            elif n >= s + 1:
+                print "elif"
+                self.mu = s * mu
+            else:
+                self.mu = mu
+        else:
+            self.mu = mu
         self.s = s
         self.n = n
         self.nq = nq
-        self.p = 0
+        self.p = float(lbmda) / self.mu
         self.len = 0
         self.lq = 0
         self.w = 0
@@ -43,10 +53,11 @@ class Statistics(object):
     def set_client_quantity_queue(self):
         if self.s > 1:
             # MMS
-            numerator = self.lbmda ** (self.s + 1)
-            denominator = math.factorial(self.s - 1) * (self.mu ** (self.s-1)) * ((self.s * self.mu - self.lbmda)**2)
-            p0 = self.get_p0(self.nq)
-            self.lq = (float(numerator) / denominator) * p0
+            if self.n <= self.s:
+                self.lq = 0
+            else:
+                for n in range(self.s, self.n):
+                    self.lq += (n - self.s) * self.probability_n(n)
         else:
             # MM1
             self.lq = self.get_expectation(self.nq)
@@ -63,17 +74,11 @@ class Statistics(object):
 
     # P0
     def get_p0(self, n):
-        if self.s > 1:
-            # MMS
-            first_summation_segment = 0
-            for x in range(0, self.s):
-                first_summation_segment += (1.0 / math.factorial(x)) * ((float(self.lbmda) / self.mu) ** x)
-            second_summation_segment = (math.factorial(self.s) * (self.mu ** 2) * (self.s * self.mu - self.lbmda))
-            denominator = 1 + first_summation_segment + (float(self.lbmda ** (self.s + 1)) / second_summation_segment)
-            p0 = 1.0 / denominator
-        else:
-            # MM1
-            p0 = 1.0 / (1 + self.cn(n))
+        p0 = 0
+        cn = 0
+        for x in range(1, n + 1):
+            cn += self.cn(n)
+        p0 = 1.0 / (1 + cn)
         return p0
 
     # Pn
@@ -87,15 +92,15 @@ class Statistics(object):
     def cn(self, n):
         cn_summation = 0
         if self.s > 1:
-            # MMS
-            for x in range(1, self.s):
-                if x <= self.s:
-                    cn_summation += (1.0/math.factorial(x)) * ((float(self.lbmda) / self.mu) ** x)
-                elif x >= self.s + 1:
-                    cn_summation += (1.0/(math.factorial(self.s)*(self.s**(x-self.s)))) * ((float(self.lbmda) / self.mu) ** x)
+            if n > 0:
+                # MMS
+                if 1 <= n <= self.s:
+                    cn_summation += (1.0 / math.factorial(n)) * ((float(self.lbmda) / self.mu) ** n)
+                elif n >= self.s + 1:
+                    cn_summation += (1.0 / (math.factorial(self.s) * (self.s ** (n - self.s)))) * (
+                                (float(self.lbmda) / self.mu) ** n)
         else:
-            for x in range(0, n):
-                cn_summation += self.get_intensity_traffic()**x
+            cn_summation = self.get_intensity_traffic() ** n
         return cn_summation
 
     # W
@@ -145,7 +150,13 @@ class Statistics(object):
     def update(self, lbmda, mu, s, n, nq):
         # update var
         self.lbmda = lbmda
-        self.mu = mu
+        if s > 1:
+            if 1 <= n <= s:
+                self.mu = n * mu
+            elif n >= s + 1:
+                self.mu = s * mu
+        else:
+            self.mu = mu
         self.s = s
         self.n = n
         self.nq = nq

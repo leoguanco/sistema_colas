@@ -68,7 +68,7 @@ class SystemQueue(object):
             self.n = self.queue.quantity_client() + self.ei
 
         # Set statistics attributes and update Statistics
-        self.statistic.update(self.lmbda, self.mu, self.s, self.n, self.queue.quantity_client())
+        # self.statistic.update(self.lmbda, self.mu, self.s, self.n, self.queue.quantity_client())
 
     def display(self):
         table = PrettyTable()
@@ -77,7 +77,7 @@ class SystemQueue(object):
         print "Sistema de colas \n"
         print table
         self.chronometer.display()
-        self.statistic.display()
+        # self.statistic.display()
         self.queue.display()
 
         for s in self.servers:
