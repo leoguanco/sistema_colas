@@ -19,7 +19,7 @@ class Statistics(object):
 
     # p
     def set_intensity_traffic(self):
-        self.p = self.lbmda / self.mu
+        self.p = float(self.lbmda) / self.mu
 
     def get_intensity_traffic(self):
         return self.p
@@ -31,7 +31,7 @@ class Statistics(object):
             numerator = self.lbmda ** (self.s + 1)
             denominator = math.factorial(self.s - 1) * (self.mu ** (self.s - 1)) * ((self.s * self.mu - self.lbmda)**2)
             p0 = self.get_p0(self.n)
-            self.len = (numerator / denominator) * p0 + (self.lbmda / self.mu)
+            self.len = (float(numerator) / denominator) * p0 + (float(self.lbmda) / self.mu)
         else:
             # MM1
             self.len = self.get_expectation(self.n)
@@ -46,7 +46,7 @@ class Statistics(object):
             numerator = self.lbmda ** (self.s + 1)
             denominator = math.factorial(self.s - 1) * (self.mu ** (self.s-1)) * ((self.s * self.mu - self.lbmda)**2)
             p0 = self.get_p0(self.nq)
-            self.lq = (numerator / denominator) * p0
+            self.lq = (float(numerator) / denominator) * p0
         else:
             # MM1
             self.lq = self.get_expectation(self.nq)
@@ -67,13 +67,13 @@ class Statistics(object):
             # MMS
             first_summation_segment = 0
             for x in range(0, self.s):
-                first_summation_segment += (1 / math.factorial(x)) * ((self.lbmda / self.mu) ** x)
+                first_summation_segment += (1.0 / math.factorial(x)) * ((float(self.lbmda) / self.mu) ** x)
             second_summation_segment = (math.factorial(self.s) * (self.mu ** 2) * (self.s * self.mu - self.lbmda))
-            denominator = 1 + first_summation_segment + ((self.lbmda ** (self.s + 1)) / second_summation_segment)
-            p0 = 1 / denominator
+            denominator = 1 + first_summation_segment + (float(self.lbmda ** (self.s + 1)) / second_summation_segment)
+            p0 = 1.0 / denominator
         else:
             # MM1
-            p0 = 1 / (1 + self.cn(n))
+            p0 = 1.0 / (1 + self.cn(n))
         return p0
 
     # Pn
@@ -90,9 +90,9 @@ class Statistics(object):
             # MMS
             for x in range(1, self.s):
                 if x <= self.s:
-                    cn_summation += (1/math.factorial(x)) * ((self.lbmda / self.mu) ** x)
+                    cn_summation += (1.0/math.factorial(x)) * ((float(self.lbmda) / self.mu) ** x)
                 elif x >= self.s + 1:
-                    cn_summation += (1/(math.factorial(self.s)*(self.s**(x-self.s)))) * ((self.lbmda / self.mu) ** x)
+                    cn_summation += (1.0/(math.factorial(self.s)*(self.s**(x-self.s)))) * ((float(self.lbmda) / self.mu) ** x)
         else:
             for x in range(0, n):
                 cn_summation += self.get_intensity_traffic()**x
@@ -105,10 +105,10 @@ class Statistics(object):
             numerator = self.lbmda ** self.s
             denominator = math.factorial(self.s - 1) * (self.mu ** (self.s - 1)) * ((self.s * self.mu - self.lbmda)**2)
             p0 = self.get_p0(self.n)
-            self.w = (numerator / denominator) * p0 + (1 / self.mu)
+            self.w = (float(numerator) / denominator) * p0 + (1.0 / self.mu)
         else:
             # MM1
-            self.w = self.get_client_quantity_system() / self.lbmda
+            self.w = float(self.get_client_quantity_system()) / self.lbmda
 
     def get_time_average_client_system(self):
         return self.w
@@ -120,17 +120,17 @@ class Statistics(object):
             numerator = self.lbmda ** self.s
             denominator = math.factorial(self.s - 1) * (self.mu ** (self.s - 1)) * ((self.s * self.mu - self.lbmda)**2)
             p0 = self.get_p0(self.nq)
-            self.wq = (numerator / denominator) * p0
+            self.wq = (float(numerator) / denominator) * p0
         else:
             # MM1
-            self.wq = self.get_client_quantity_queue() / self.lbmda
+            self.wq = float(self.get_client_quantity_queue()) / self.lbmda
 
     def get_time_average_client_queue(self):
         return self.wq
 
     # ws
     def set_time_average_service_system(self):
-        self.ws = 1 / self.mu
+        self.ws = 1.0 / self.mu
 
     def get_time_average_service_system(self):
         return self.ws
@@ -142,7 +142,14 @@ class Statistics(object):
         print table
         # print "L: " + str(self.len) + "Lq: " + str(self.lq) + "W: " + str(self.w) + "Wq: " + str(self.wq) + "\n"
 
-    def update(self):
+    def update(self, lbmda, mu, s, n, nq):
+        # update var
+        self.lbmda = lbmda
+        self.mu = mu
+        self.s = s
+        self.n = n
+        self.nq = nq
+
         # Lq
         self.set_client_quantity_queue()
         # L
