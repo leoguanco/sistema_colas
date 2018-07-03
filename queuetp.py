@@ -35,7 +35,8 @@ class QueueTP(object):
         return self.time_arrival_client
 
     def set_time_next_client(self):
-        self.time_next_client = -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.lmbda)
+        self.time_next_client = -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.lmbda) + \
+                                self.time_next_client
 
     def get_time_next_client(self):
         return self.time_next_client

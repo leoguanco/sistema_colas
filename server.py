@@ -29,7 +29,7 @@ class Server(object):
 
     def set_time_next_client(self, n):
         self.time_next_client = -1.0 * (math.log(1 - float(np.random.rand(1)[0]), math.e) / self.mu) + \
-                                self.time_arrival_client
+                                self.time_next_client
 
     def get_time_next_client(self):
         return self.time_next_client
@@ -44,6 +44,7 @@ class Server(object):
             self.ns += 1
         else:
             self.status = 0
+            self.set_time_next_client(n)
 
     def dispatch(self, n):
         self.client = None

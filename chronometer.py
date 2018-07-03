@@ -9,7 +9,7 @@ class Chronometer(object):
         return self.time
 
     def iterator(self, time):
-        self.time += time
+        self.time = time
 
     def display(self):
         table = PrettyTable()

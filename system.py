@@ -68,7 +68,6 @@ class SystemQueue(object):
             self.n = self.queue.quantity_client() + self.ei
 
         # Set statistics attributes and update Statistics
-        print self.lmbda, self.mu, self.s, self.n, self.queue.quantity_client()
         self.statistic.update(self.lmbda, self.mu, self.s, self.n, self.queue.quantity_client())
 
     def display(self):
