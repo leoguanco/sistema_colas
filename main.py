@@ -16,9 +16,16 @@ def main():
     else:
         clear = lambda: os.system('clear')
 
+    serv = input("Ingrese la cant. de servidores en paralelo: ")
+    systems = []
     s, lmbda, mu, nq = initial_value()
+    pre_s = s
+    pre_lmbda = lmbda
+    pre_mu = mu
+    pre_nq = nq
 
-    system = SystemQueue(s, lmbda, mu, nq)
+    for ser in range(0, serv):
+        systems.append(SystemQueue(s, lmbda, mu, nq))
 
     while True:
         input_menu = select.select([sys.stdin], [], [], 1)[0]
@@ -29,7 +36,8 @@ def main():
                 if pause:
                     print "En pausa"
             elif value == 'R':
-                system = SystemQueue(s, lmbda, mu, nq)
+                for ser in range(0, s):
+                    systems.append(SystemQueue(pre_s, pre_lmbda, pre_mu, pre_nq))
             elif value == 'E':
                 sys.exit(0)
             elif value == 'D':
@@ -38,25 +46,30 @@ def main():
                 edit = sys.stdin.readline().rstrip()
                 if edit == 'L':
                     lmbda = input("Ingrese lambda: ")
-                    system.set_status(0, lmbda, mu, 0)
+                    for system in systems:
+                        system.set_status(0, lmbda, mu, 0)
                     pause = False
                 elif edit == 'M':
                     mu = input("Ingrese mu: ")
-                    system.set_status(0, lmbda, mu, 0)
+                    for system in systems:
+                        system.set_status(0, lmbda, mu, 0)
                     pause = False
                 elif edit == 'S':
                     s = input("Ingrese la cant. de servidores: ")
-                    system.set_status(s, lmbda, mu, 0)
+                    for system in systems:
+                        system.set_status(s, lmbda, mu, 0)
                     pause = False
                 elif edit == 'N':
                     n = input("Ingrese cantidad de clientes nuevos: ")
-                    system.set_status(0, lmbda, mu, n)
+                    for system in systems:
+                        system.set_status(0, lmbda, mu, n)
                     pause = False
 
         if not pause:
             clear()
-            system.iterator()
-            system.display()
+            for ser in systems:
+                ser.iterator()
+                ser.display()
             print "\n Pause/Restart (P)    Reset (R)    Exit (E)    Edit (D) "
             # sleep(0.5)
 
